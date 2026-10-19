@@ -1,0 +1,17 @@
+[package]
+name    = "toxic-ipc"
+version = "0.1.0"
+edition = "2021"
+description = "Toxic IPC protocol — GUI↔daemon haberleşme katmanı (Faz 5'te tam implementasyon)."
+license = "MIT"
+publish = false
+
+[features]
+default = ["std"]
+std = []
+
+[dependencies]
+# std feature: internally-tagged enum Deserialize için alloc/std gerekiyor.
+serde      = { workspace = true, features = ["std"] }
+serde_json = { workspace = true, features = ["std"] }
+zeroize    = { workspace = true }

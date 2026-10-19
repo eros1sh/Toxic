@@ -12,15 +12,15 @@ default = ["std"]
 std = ["dep:unicode-normalization"]
 
 [dependencies]
-aes = { workspace = true, features = ["zeroize"] }
+aes    = { workspace = true, features = ["zeroize"] }
 argon2 = { workspace = true }
 blake2 = { workspace = true }
 chacha20poly1305 = { workspace = true }
 rand_core = { workspace = true }
-subtle = { workspace = true }
+subtle    = { workspace = true }
 unicode-normalization = { workspace = true, optional = true }
-xts-mode = { workspace = true }
-zeroize = { workspace = true }
+# xts-mode kaldırıldı — toxic-cipher'da kendi implementasyonumuz var.
+zeroize  = { workspace = true }
 
 [dev-dependencies]
 rand_core = { workspace = true, features = ["getrandom"] }

@@ -117,6 +117,18 @@ impl RegionSalt {
     }
 }
 
+impl From<[u8; SALT_LEN]> for RegionSalt {
+    fn from(bytes: [u8; SALT_LEN]) -> Self {
+        RegionSalt(bytes)
+    }
+}
+
+impl AsRef<[u8]> for RegionSalt {
+    fn as_ref(&self) -> &[u8] {
+        &self.0
+    }
+}
+
 impl core::fmt::Debug for RegionSalt {
     fn fmt(&self, f: &mut core::fmt::Formatter<'_>) -> core::fmt::Result {
         // Tuz gizli tutulmali; ozet goster.

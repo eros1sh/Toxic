@@ -9,11 +9,13 @@
 extern crate alloc;
 
 mod error;
+pub mod codec;
 pub mod header;
 pub mod kdf;
 pub mod keyfile;
 pub mod layout;
 pub mod password;
+pub mod slot;
 pub mod xts;
 
 pub use error::{Error, Result};

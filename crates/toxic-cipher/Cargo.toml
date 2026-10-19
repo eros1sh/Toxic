@@ -1,0 +1,24 @@
+[package]
+name = "toxic-cipher"
+description = "Toxic disk şifreleme: AES/Serpent/Twofish XTS veri şifreleme (no_std, no_alloc)"
+version.workspace = true
+edition.workspace = true
+rust-version.workspace = true
+publish = false
+
+[features]
+# Varsayılan: no_std, no_alloc — tüm platformlarda çalışır.
+# "std" özelliği yalnızca testlerde gerekli.
+default = []
+std = []
+
+[dependencies]
+aes     = { workspace = true }
+serpent = { workspace = true }
+twofish = { workspace = true }
+# xts-mode kaldırıldı — kendi raw_xts.rs implementasyonumuzu kullanıyoruz.
+subtle  = { workspace = true }
+zeroize = { workspace = true }
+
+[lints]
+workspace = true

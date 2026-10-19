@@ -40,6 +40,14 @@ pub enum Error {
     Kdf,
     /// AEAD şifreleme başarısız oldu.
     Aead,
+    /// Slot mühürleme (seal) işlemi başarısız oldu.
+    SlotSeal,
+    /// Slot açma (open) işlemi başarısız oldu; anahtar hatalı veya veri bozuk.
+    SlotOpen,
+    /// Slot indeksi geçersiz (0–7 dışında).
+    InvalidSlotIndex,
+    /// Header codec çözme/oluşturma hatası.
+    Codec,
 }
 
 impl fmt::Display for Error {
@@ -59,7 +67,11 @@ impl fmt::Display for Error {
             Self::BufferSize => "tampon boyutu geçersiz ya da hizalı değil",
             Self::Rng => "rastgele sayı üreteci başarısız oldu",
             Self::Kdf => "anahtar türetme başarısız oldu",
-            Self::Aead => "header şifreleme başarısız oldu",
+            Self::Aead              => "header şifreleme başarısız oldu",
+            Self::SlotSeal          => "slot mühürleme başarısız oldu",
+            Self::SlotOpen          => "slot açma başarısız oldu; anahtar hatalı veya veri bozuk",
+            Self::InvalidSlotIndex  => "slot indeksi 0–7 arasında olmalı",
+            Self::Codec             => "header codec hatası",
         };
         f.write_str(msg)
     }

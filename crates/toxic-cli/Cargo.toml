@@ -12,8 +12,10 @@ path = "src/main.rs"
 
 [dependencies]
 toxic-core = { workspace = true, features = ["std"] }
-anyhow = { workspace = true }
-clap = { workspace = true }
+anyhow    = { workspace = true }
+clap      = { workspace = true }
+hex       = "0.4.3"
+rand_core = { workspace = true, features = ["getrandom"] }
 rpassword = { workspace = true }
 
 [lints]
