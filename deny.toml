@@ -1,0 +1,84 @@
+# cargo-deny yapılandırması
+# cargo deny check komutu ile çalıştırılır.
+# CI'da otomatik olarak çalışır; lisans veya güvenlik açığı bulunursa derlemeyi engeller.
+
+[graph]
+# Tüm platformlar ve özellikler için bağımlılıkları denetle.
+all-features = false
+no-default-features = false
+
+# ── Lisans Denetimi ────────────────────────────────────────────────────────────
+[licenses]
+# Açık kaynak MIT projesi için izin verilen lisanslar.
+# Proje MIT; bağımlılıklar permissive lisans kullanmalı.
+allow = [
+    "MIT",
+    "Apache-2.0",
+    "Apache-2.0 WITH LLVM-exception",
+    "BSD-2-Clause",
+    "BSD-3-Clause",
+    "ISC",
+    "Unicode-DFS-2016",
+    "CC0-1.0",
+    "Zlib",
+    "OpenSSL",           # Bazı eski bağımlılıklar için (ring vs.)
+]
+
+# Uyarı eşiği: UNLICENSED veya bilinmeyen lisans bulunursa reddet.
+unused-allowed-license = "allow"
+
+# Lisans metni doğrulaması gerektiren paketler için istisna.
+# (boş — tüm bağımlılıklar izin verilen listede olmalı)
+exceptions = []
+
+# ── Güvenlik Açığı Denetimi (Advisories) ──────────────────────────────────────
+[advisories]
+# RustSec Advisory DB veritabanını kullan.
+db-path = "~/.cargo/advisory-db"
+db-urls = ["https://github.com/rustsec/advisory-db"]
+
+# Kritik veya yüksek şiddetli güvenlik açıkları CI'yı engeller.
+vulnerability = "deny"
+
+# Bakımsız (unmaintained) paketler uyarı verir ama engellemez.
+unmaintained = "warn"
+
+# Güvenlik açığı yoksa uyarı.
+unsound = "deny"
+
+# Birden fazla sürüm kullanılan paketler uyarı.
+notice = "warn"
+
+# ── Kaynak Denetimi (Sources) ─────────────────────────────────────────────────
+[sources]
+# Yalnızca crates.io veya workspace yerel yolları.
+unknown-registry = "deny"
+unknown-git = "deny"
+
+allow-registry = ["https://github.com/rust-lang/crates.io-index"]
+allow-git = []
+
+# ── Bağımlılık Çakışması (Bans) ───────────────────────────────────────────────
+[bans]
+# Güvenlik hassasiyetli projede aynı crate'in birden fazla sürümünü engelle.
+multiple-versions = "warn"
+wildcards = "deny"
+
+# Yasaklanan crate'ler: güvensiz kriptografi veya zayıf rastgele sayı üreteçleri.
+deny = [
+    # MD5, SHA1: parola hashleme için asla kullanılmamalı.
+    { name = "md5" },
+    { name = "sha1" },
+    # rand: getrandom veya rand_core tercih edilmeli.
+    # (ama gerekirse allow-list'e eklenebilir)
+
+    # openssl-sys: RustCrypto ekosistemi tercih edilir.
+    # Gerekirse açıklama ile allow'a alınabilir.
+]
+
+# İzin verilen crate sürüm kısıtlamaları (boş = kısıtlama yok).
+allow = []
+
+# Çoğaltılmasına izin verilen crate'ler (derleme araçları vs.).
+skip = []
+skip-tree = []

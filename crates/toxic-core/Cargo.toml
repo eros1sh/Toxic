@@ -1,0 +1,29 @@
+[package]
+name = "toxic-core"
+description = "Toxic disk şifreleme: header formatı, anahtar türetme ve veri şifreleme çekirdeği (no_std)"
+version.workspace = true
+edition.workspace = true
+rust-version.workspace = true
+publish = false
+
+[features]
+default = ["std"]
+# std: Unicode NFC parola normalizasyonu ve std::error::Error implementasyonu.
+std = ["dep:unicode-normalization"]
+
+[dependencies]
+aes = { workspace = true, features = ["zeroize"] }
+argon2 = { workspace = true }
+blake2 = { workspace = true }
+chacha20poly1305 = { workspace = true }
+rand_core = { workspace = true }
+subtle = { workspace = true }
+unicode-normalization = { workspace = true, optional = true }
+xts-mode = { workspace = true }
+zeroize = { workspace = true }
+
+[dev-dependencies]
+rand_core = { workspace = true, features = ["getrandom"] }
+
+[lints]
+workspace = true

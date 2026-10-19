@@ -1,0 +1,46 @@
+[workspace]
+resolver = "2"
+members = ["crates/toxic-core", "crates/toxic-cli"]
+
+[workspace.package]
+version = "0.1.0"
+edition = "2021"
+rust-version = "1.85"
+
+[workspace.dependencies]
+toxic-core = { path = "crates/toxic-core", default-features = false }
+
+aes = { version = "0.8.4", default-features = false }
+argon2 = { version = "0.5.3", default-features = false, features = ["alloc", "zeroize"] }
+blake2 = { version = "0.10.6", default-features = false }
+chacha20poly1305 = { version = "0.10.1", default-features = false }
+rand_core = { version = "0.6.4", default-features = false }
+subtle = { version = "2.6.1", default-features = false }
+unicode-normalization = { version = "0.1.24", default-features = false }
+xts-mode = { version = "0.5.1", default-features = false }
+zeroize = { version = "1.8.1", default-features = false, features = ["alloc", "zeroize_derive"] }
+
+anyhow = "1.0.98"
+clap = { version = "4.5.40", features = ["derive"] }
+rpassword = "7.4.0"
+
+[workspace.lints.rust]
+unsafe_code = "deny"
+missing_debug_implementations = "warn"
+
+[workspace.lints.clippy]
+all = { level = "warn", priority = -1 }
+
+# Argon2 debug derlemede çok yavaş; testler ve geliştirme için optimize et.
+[profile.dev.package.argon2]
+opt-level = 3
+[profile.dev.package.blake2]
+opt-level = 3
+[profile.dev.package.aes]
+opt-level = 3
+
+[profile.release]
+lto = "fat"
+codegen-units = 1
+panic = "abort"
+strip = "symbols"

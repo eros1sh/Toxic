@@ -1,0 +1,7 @@
+/target
+*.txc
+*.pdb
+*.user
+.vs/
+bin/
+obj/
